@@ -18,13 +18,14 @@ create table if not exists public.posts(
     updated_at timestamp default now()
 );
 
-create table if not exists public.followers(
+create table if not exists public.follows(
     user_id bigint not null references public.users (id),
     follower_id bigint not null references public.users (id),
     created_at timestamp default now(),
-    updated_at timestamp default now()
+    updated_at timestamp default now(),
+    unique(user_id,follower_id)
 );
 
 create index post_user_id_index on public.posts (user_id);
-create index follows_user_id_index on public.followers (user_id);
-create index follows_follower_id_index on public.followers (follower_id);
+create index follows_user_id_index on public.follows (user_id);
+create index follows_follower_id_index on public.follows (follower_id);
